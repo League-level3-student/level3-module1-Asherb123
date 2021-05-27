@@ -13,11 +13,42 @@ public class LongChipCompetition {
      */
     private ArrayList<Beatle> theBeatles = new ArrayList<Beatle>();
 
-    public static void main(String[] args) {
+  
+
+public static void main(String[] args) {
         LongChipCompetition lcc = new LongChipCompetition();
-
+         lcc.initializeBeatles();
+     lcc.findChip();
+      
+    
     }
-
+void findChip() {
+	
+	double d = 0;
+	String beatleName = "";
+	for (int i = 0; i <  theBeatles.size(); i++) {
+			Beatle a = theBeatles.get(i);
+			ArrayList <Chip> chipzz = a.getChips();
+			
+			
+			
+			for (int j = 0; j < chipzz.size(); j++) {
+			
+			
+			Chip b =  chipzz.get(j);
+			
+				if (b.getLength()>d) {
+					d=b.getLength();
+					beatleName=a.getName();
+					System.out.println(beatleName);
+					System.out.println(d);
+				}
+		}
+	
+	}
+	
+	
+}
     private void initializeBeatles() {
         Beatle george = new Beatle("George");
         Beatle john = new Beatle("John");
@@ -43,7 +74,12 @@ class Beatle {
         initializePlateOfChips();
     }
 
-    private void initializePlateOfChips() {
+    public static int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private void initializePlateOfChips() {
         int numberOfChips = new Random().nextInt(100);
         for (int i = 0; i < numberOfChips; i++) {
             chips.add(new Chip(new Random().nextDouble() * 10));
