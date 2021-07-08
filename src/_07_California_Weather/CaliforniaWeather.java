@@ -1,6 +1,11 @@
 package _07_California_Weather;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /*
  * OBJECTIVE:
@@ -9,7 +14,7 @@ import java.util.HashMap;
  * and the Utilities class inside this project to get the temperature data
  * from a day in December 2020.
  * Example: User: Encinitas
- *          Program: Encinitas is Overcast with a tempeature of 59.01 °F
+ *          Program: Encinitas is Overcast with a tempeature of 59.01 ï¿½F
  * 
  * 2. Create a way for the user to specify the weather condition and then
  * list the cities that have those conditions.
@@ -18,7 +23,7 @@ import java.util.HashMap;
  * 
  * 3. Create a way for the user to enter a minimum and maximum temperature
  * and then list the cities that have temperatures within that range
- * Example: User: minimum temperature °F = 65.0, max temperature °F = 70.0
+ * Example: User: minimum temperature ï¿½F = 65.0, max temperature ï¿½F = 70.0
  *          Program: Fortana, Glendale, Escondido, Del Mar, ...
  *          
  * EXTRA:
@@ -28,18 +33,52 @@ import java.util.HashMap;
  */
 
 public class CaliforniaWeather {
-    
-    void start() {
-        HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
-        
-        // All city keys have the first letter capitalized of each word
-        String cityName = Utilities.capitalizeWords( "National City" );
-        WeatherData datum = weatherData.get(cityName);
-        
-        if( datum == null ) {
-            System.out.println("Unable to find weather data for: " + cityName);
-        } else {
-            System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of " + datum.temperatureF + " F");
-        }
-    }
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+
+	// JButton
+	void start() {
+		HashMap<String, WeatherData> weatherData = Utilities.getWeatherData();
+		String[] buttons = { "Search by city", "Search by weather", "Search by temperature" };
+		int buttonss = JOptionPane.showOptionDialog(null, "Please select one", "Lobby", 0, -1, null, buttons, 0);
+		if (buttonss == 0) {
+			String s = JOptionPane.showInputDialog("Search a city");
+
+			String cityName = Utilities.capitalizeWords(s);
+			WeatherData datum = weatherData.get(cityName);
+
+			if (datum == null) {
+				System.out.println("Unable to find weather data for: " + cityName);
+			} else {
+				System.out.println(cityName + " is " + datum.weatherSummary + " with a temperature of "
+						+ datum.temperatureF + " F");
+			}
+		}
+
+		if (buttonss == 1) {
+			String a = JOptionPane.showInputDialog("Search weather").trim();
+
+			for (String city : weatherData.keySet()) {
+				if (weatherData.get(city).weatherSummary.contains(a)) {
+					System.out.println(city);
+				}
+			}
+		}
+	if (buttonss == 2) {
+		String b = JOptionPane.showInputDialog("Input minumum temperture");
+		String c = JOptionPane.showInputDialog("Input maximum temperture");
+		int low = Integer.parseInt(b);
+		int high = Integer.parseInt(c);
+		for (String city : weatherData.keySet()) {
+			
+			if (weatherData.get(city).temperatureF >= low && weatherData.get(city).temperatureF <=high) {
+				System.out.println(city);
+			}
+		}
+	}
+	
+	
+	}
 }
+
+// All city keys have the first letter capitalized of each word
